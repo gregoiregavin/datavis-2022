@@ -1,0 +1,9 @@
+IdNo
+TotalMoney
+GameName
+Genre
+PlayerNo
+TournamentNo
+Top_Country
+Top_Country_Earnings
+ReleaseYear
