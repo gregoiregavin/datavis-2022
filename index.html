@@ -7,63 +7,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://d3js.org/d3.v6.min.js'></script>
     <link href="./global.css" rel="stylesheet">
-    <title>Ma première visualisation</title>
+    <link rel="icon" type="image/x-icon" href="/favicon-gamepad.png">
+    <title>Profits en E-Sport</title>
 </head>
 
 <body>
-    <h1>Bonjour?</h1>
     <script type="text/javascript">
-        //https://www.datavis.fr/d3js/firststep
-        /* var svg = d3.select("#svg1").append("svg");
-        svg.append("rect")
-            .attr("x", 20)
-            .attr("y", 20)
-            .attr("width", 200)
-            .attr("height", 50);
 
-        svg2 = d3.select("#svg2").append("svg");
-        var group = svg2.append("g");
-        for (var i = 0; i < 3; ++i) {
-            group.append("rect")
-                .attr("x", 20 + 100 * i)
-                .attr("y", 20)
-                .attr("width", 10 + 10 * i)
-                .attr("height", 50)
-                .style("fill", "lightgrey")
-                .style("stroke", "black")
-                .style("stroke-width", "3");
+        // TABLEAUX
+
+        let colNames = {
+            'IdNo': 'ID',
+            'TotalMoney': 'Argent gagné',
+            'GameName': 'Nom du jeu',
+            'Genre': 'Genre du jeu',
+            'PlayerNo': 'Nombre de joueurs',
+            'TournamentNo': 'Nombre de tournois',
+            'Top_Country': 'Pays',
+            'Top_Country_Earnings': 'Gains dans le pays',
+            'ReleaseYear': 'Date de sortie'
         }
 
-        const data = [
-            { "position": 1, "country": "Chine", "population": 1355045511 },
-            { "position": 2, "country": "Inde", "population": 1210193422 },
-            { "position": 3, "country": "États-Unis", "population": 315664478 },
-            { "position": 4, "country": "Indonésie", "population": 237641326 },
-            { "position": 5, "country": "Brésil", "population": 193946886 },
-            { "position": 6, "country": "Pakistan", "population": 182614855 },
-            { "position": 7, "country": "Nigeria", "population": 174507539 },
-            { "position": 8, "country": "Bangladesh", "population": 152518015 },
-            { "position": 9, "country": "Russie", "population": 143056383 },
-            { "position": 10, "country": "Japon", "population": 127650000 }
-        ];
+        // CONSTRUCTION DE LA PAGE
 
-        var svg3 = d3.select('#svg3').append('svg')
-        var group = svg3.append("g");
+        let wrapper = d3.select('body')
+            .append('div')
+            .classed('wrapper', true)
 
-        group.selectAll(".node")
-            .data(data) // 2
-            .enter() // 3
-            .append("rect") // 4
-            .attr("x", d => d.position * 30) // 5
-            .attr("y", 0) //6
-            .attr("width", 20) // 7
-            .attr("height", d => d.population / 10000000); // 8 */
+        let pageTitle = wrapper.append('h1')
+            .classed('pageTitle', true)
+            .html('Profits en E-Sport')
 
+        let pageSubTitle = wrapper.append('h2')
+            .classed('pageSubTitle', true)
+            .html('Projet de validation')
+
+        let table = wrapper.append('table')
+        let thead = table.append('thead')
+        let tbody = table.append('tbody')
+
+        // RÉCUPÉRATION DES DONNÉES
         d3.csv('ESport_Earnings.csv', function (data) {
-            d3.select('body')
-                .append('p')
-                .text(data.Top_Country)
+
+            //console.log(data)
+
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i].Name);
+                console.log(data[i].Age);
+            }
+
+            //let table = wrapper.append('table')
+            //let thead = table.append('thead')
+            //let tbody = table.append('tbody')
+
+            //d3.select('body').append('p').text(data.Top_Country)
+            //console.log(Object.keys(data)[2])
+            //console.log(Object.values(data)[2])
+
+            d3.select('body').append('p').text(Object.keys(data))
         })
+
+        /* d3.csv("ESport_Earnings.csv").then(function (data) {
+
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i].GameName);
+            }
+        }); */
+
+        const donnees = d3.csv('ESport_Earnings.csv')
+        console.log(donnees)
+
     </script>
 </body>
 
