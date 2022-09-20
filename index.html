@@ -47,35 +47,14 @@
         let tbody = table.append('tbody')
 
         // RÉCUPÉRATION DES DONNÉES
+
         d3.csv('ESport_Earnings.csv', function (data) {
 
-            //console.log(data)
-
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].Name);
-                console.log(data[i].Age);
-            }
-
-            //let table = wrapper.append('table')
-            //let thead = table.append('thead')
-            //let tbody = table.append('tbody')
-
-            //d3.select('body').append('p').text(data.Top_Country)
-            //console.log(Object.keys(data)[2])
-            //console.log(Object.values(data)[2])
-
-            d3.select('body').append('p').text(Object.keys(data))
+            //d3.select('body').append('p').text(Object.keys(data))
+            d3.select('body').append('p').text(data.GameName)
+            console.log(data);
+            
         })
-
-        /* d3.csv("ESport_Earnings.csv").then(function (data) {
-
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].GameName);
-            }
-        }); */
-
-        const donnees = d3.csv('ESport_Earnings.csv')
-        console.log(donnees)
 
     </script>
 </body>
