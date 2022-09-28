@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='https://d3js.org/d3.v6.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
     <link href="./global.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/favicon-gamepad.png">
     <title>Profits en E-Sport</title>
 </head>
 
 <body>
-    <script type="text/javascript">
+    <script>
 
         // TABLEAUX
 
@@ -27,6 +27,19 @@
             'Top_Country_Earnings': 'Gains dans le pays',
             'ReleaseYear': 'Date de sortie'
         }
+
+        athletes = [
+            { name: "Floyd Mayweather", sport: "Boxing", nation: "United States", earnings: 285 },
+            { name: "Lionel Messi", sport: "Soccer", nation: "Argentina", earnings: 111 },
+            { name: "Cristiano Ronaldo", sport: "Soccer", nation: "Portugal", earnings: 108 },
+            { name: "Conor McGregor", sport: "MMA", nation: "Ireland", earnings: 99 },
+            { name: "Neymar", sport: "Soccer", nation: "Brazil", earnings: 90 },
+            { name: "LeBron James", sport: "Basketball", nation: "United States", earnings: 85.5 },
+            { name: "Roger Federer", sport: "Tennis", nation: "Switzerland", earnings: 77.2 },
+            { name: "Stephen Curry", sport: "Basketball", nation: "United States", earnings: 76.9 },
+            { name: "Matt Ryan", sport: "Football", nation: "United States", earnings: 67.3 },
+            { name: "Matthew Stafford", sport: "Football", nation: "United States", earnings: 59.5 }
+        ]
 
         // CONSTRUCTION DE LA PAGE
 
@@ -46,14 +59,51 @@
         let thead = table.append('thead')
         let tbody = table.append('tbody')
 
+        let svg = wrapper.append('svg').classed('canvas', true)
+
         // RÉCUPÉRATION DES DONNÉES
 
         d3.csv('ESport_Earnings.csv', function (data) {
 
             //d3.select('body').append('p').text(Object.keys(data))
             d3.select('body').append('p').text(data.GameName)
-            console.log(data);
-            
+
+            // Compter
+            let nParGenre = d3.nest()
+                                .key(d => d.Genre)
+                                .rollup(d => d.length)
+                                .entries(data)
+
+            //console.log(nParGenre)
+
+            // Faire des sommes par genre
+            let moneyParGenre = d3.nest()
+                                    .key(d => d.Genre)
+                                    .rollup(d => d3.sum(d, g => g.Top_Country_Earnings))
+                                    .entries(data)
+                                    
+            //console.log(moneyParGenre)
+
+            function main(inData) {
+
+                inData.sort(function(a,b) {
+                    return b.value - a.value
+                })
+
+                console.log(inData)
+                
+                let rectangles = svg.selectAll('rect')
+                let rectanglesData = rectangles.data(inData)
+
+                rectanglesData.enter()
+                                .append('rect')
+                                .attr('x', 0)
+                                .attr('y', (d, i) => i*10)
+                                .attr('width', d => d.value*0.00001)
+                                .attr('height', 30)
+            }
+
+            main(moneyParGenre)
         })
 
     </script>
