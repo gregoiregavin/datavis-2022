@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
-    <link href="./global.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/favicon-gamepad.png">
     <title>Profits en E-Sport</title>
 </head>
@@ -15,7 +14,8 @@
     <script>
 
         // CONSTANTES
-        CANVAS_WIDTH = 1280
+        const CANVAS_WIDTH = 800
+        const CANVAS_PX = CANVAS_WIDTH+'px'
 
         // TABLEAUX
 
@@ -37,7 +37,7 @@
             .append('div')
             .classed('wrapper', true)
             .style('background', 'aquamarine')
-            .style('width', CANVAS_WIDTH)
+            .style('width', CANVAS_PX)
 
         let pageTitle = wrapper.append('h1')
             .classed('pageTitle', true)
@@ -50,7 +50,7 @@
         let svg = wrapper.append('svg')
                             .classed('canvas', true)
                             .style('background', 'red')
-                            .style('width', '100%')
+                            .style('width', CANVAS_PX) // faire un savant calcul
 
         // RÉCUPÉRATION DES DONNÉES
 
@@ -81,8 +81,6 @@
             let echelle = d3.scaleLinear()
                                 .domain(extentMoney) //unités observables
                                 .range([0, CANVAS_WIDTH]) //unités à afficher
-            
-            
 
             function main(inData) {
 
@@ -98,9 +96,10 @@
                 rectanglesData.enter()
                                 .append('rect')
                                 .attr('x', 0)
-                                .attr('y', (d, i) => i * 15)
+                                .attr('y', (d, i) => i * 30)
                                 .attr('width', d => echelle(d.value))
-                                .attr('height', 10)
+                                .attr('height', 25)
+                                .style('fill', 'green') // liste avec les couleurs et appeler le tableau 'fill', 'couleur[i]'
             }
 
             main(moneyParGenre)
